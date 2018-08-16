@@ -1,5 +1,5 @@
 {
-  "name": "system-docs",
+  "name": "sysdoc",
   "version": "1.0.0",
   "description": "Comment Parser for Design Systems",
   "main": "index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/canvasplay/system-docs.git"
+    "url": "git+https://github.com/canvasplay/sysdoc.git"
   },
   "author": "canvasplay",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/canvasplay/system-docs/issues"
+    "url": "https://github.com/canvasplay/sysdoc/issues"
   },
-  "homepage": "https://github.com/canvasplay/system-docs#readme",
+  "homepage": "https://github.com/canvasplay/sysdoc#readme",
   "dependencies": {
     "comment-parser": "^0.5.0",
     "fs-extra": "^6.0.1",
