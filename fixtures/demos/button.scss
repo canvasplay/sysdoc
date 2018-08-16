@@ -1,0 +1,27 @@
+/**
+ * Just buttons
+ *
+ * @module Button
+ * @selector .btn
+ * @parent Components
+ */
+ 
+/**
+ * Using Primary Color
+ *
+ * @modifier Button Primary
+ * @selector .btn-primary
+ */
+
+/**
+ * Using Outlined Primary Color
+ *
+ * @modifier Button Outline Primary
+ * @selector .btn-outline-primary
+ */
+ 
+/**
+ * @example
+ * <button class="btn btn-primary">Button</button>
+ * <button class="btn btn-outline-primary">Button</button>
+ */

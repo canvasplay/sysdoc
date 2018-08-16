@@ -1,0 +1,131 @@
+<html>
+<head>
+  <title>Online Parser</title>
+</head>
+<body>
+<table style="width:100%">
+  <tr>
+    <td width="50%; vertical-align: top;">
+      <textarea id="INPUT" rows="20" style="width: 100%">
+    
+/**
+ * All available colors.
+ * @section Colors
+ * @parent Visuals
+ * @package
+ * @nofollow
+ *
+ */
+ 
+
+/**
+ * This is the main color used for body text. Lorem ipsum dolor sit amet consectetuer adipiscing elit aliquet amet.
+ * @colorset Ink
+ * @parent Colors
+ */
+ 
+  /**
+   * @color Ink Lightest
+   * @value #919EAB
+   */
+  /**
+   * @color Ink Lighter
+   * @value #637381
+   */
+  /**
+   * @color Ink Light
+   * @value #454F5B
+   */
+  /**
+   * @color Ink
+   * @value #212B36
+   * @base
+   */
+  
+
+/**
+ * @colorset Blue
+ * @parent Colors
+ */
+ 
+  /**
+   * @color Blue Lighter
+   * @value #EBF5FA
+   */
+  /**
+   * @color Blue Light
+   * @value #B4E1FA
+   */
+  /**
+   * @color Blue
+   * @value #007ACE
+   * @base
+   */
+  /**
+   * @color Blue Dark
+   * @value #084E8A
+   */
+  /**
+   * @color Blue Darker
+   * @value #001429
+   */
+
+
+/**
+ * @colorset Green
+ * @parent Colors
+ */
+ 
+  /**
+   * @color Green Lighter
+   * @value #E3F1DF
+   */
+  /**
+   * @color Green Light
+   * @value #BBE5B3
+   */
+  /**
+   * @color Green
+   * @value #50B83C
+   * @base
+   */
+  /**
+   * @color Green Dark
+   * @value #108043
+   */
+  /**
+   * @color Green Darker
+   * @value #173630
+   */
+  
+
+
+    
+    
+      
+      </textarea>
+      <button onclick="parseIt()">parse</button>
+    </td>
+    <td style="width:50%; vertical-align: top;"><textarea id="OUTPUT" rows="20" style="width: 100%" disabled>
+      </textarea>
+    </td>
+  </tr>
+</table>
+
+<script src="comment-parser.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.8.0-rc2/beautify.js"></script>
+
+<script>
+  
+  var parseIt = function(){
+    
+    var input = document.getElementById('INPUT').value;
+    var result = P.parse(input);
+    var code = js_beautify(JSON.stringify(result));
+    document.getElementById('OUTPUT').value = code;
+    
+  }
+  
+</script>
+</body>
+</html>

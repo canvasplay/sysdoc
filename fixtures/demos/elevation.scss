@@ -1,0 +1,51 @@
+/**
+ * Elevation is the relative distance between two surfaces along the z-axis.
+ * @section Elevation
+ * @parent Demos
+ * @package
+ * @nofollow
+ *
+ */
+ 
+
+/**
+ * @layer base
+ * @data {zindex} 0
+ * @data {distance} 0px
+ * @data {shadow} [none]
+ */
+
+/**
+ * @layer flat
+ * @data {zindex} 0
+ * @data {distance} 0px
+ * @data {shadow} [none]
+ */
+ 
+/**
+ * @layer raised
+ * @data {zindex} 1
+ * @data {distance} 1px
+ * @data {shadow} [0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)]
+ */
+
+/**
+ * @layer menu
+ * @data {zindex} 100
+ * @data {distance} 4px
+ * @data {shadow} [0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)]
+ */
+
+/**
+ * @layer navigation
+ * @data {zindex} 400
+ * @data {distance} 4px
+ * @data {shadow} [0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)]
+ */
+
+/**
+ * @layer modal
+ * @data {zindex} 800
+ * @data {distance} 4px
+ * @data {shadow} [0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)]
+ */

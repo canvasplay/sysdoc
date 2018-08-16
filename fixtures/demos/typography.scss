@@ -1,0 +1,158 @@
+/**
+ * Typography related docs
+ * @section Typography
+ * @parent Demos
+ * @package
+ * @nofollow
+ *
+ */
+
+
+/**
+ * This is the main font used in the site
+ * @font Roboto
+ * @parent Typography
+ * @data {family} Roboto, Helvetica Neue, Arial, sans-serif
+ * @data {weight} 200, 400, 600, 800
+ * @data {style} normal, italic
+ */
+ 
+ 
+/**
+ * This is how headings looks like.
+ * @styleset Headings
+ * @parent Typography
+ */
+
+/**
+ * @style Display 1
+ * @selector h1.display-1
+ * @data {font-family} Roboto
+ * @data {font-size} 96px
+ * @data {line-height} 115px
+ * @data {font-style} normal
+ * @data {font-weight} 300
+ */
+
+/**
+ * @style Display 2
+ * @selector h1.display-2
+ * @data {font-size} 88px
+ * @data {font-family} Roboto
+ * @data {line-height} 105px
+ * @data {font-style} normal
+ * @data {font-weight} 300
+ */
+
+/**
+ * @style Display 3
+ * @selector h1.display-3
+ * @data {font-size} 72px
+ * @data {font-family} Roboto
+ * @data {line-height} 86px
+ * @data {font-style} normal
+ * @data {font-weight} 300
+ */
+
+/**
+ * @style Display 4
+ * @selector h1.display-4
+ * @data {font-size} 56px
+ * @data {font-family} Roboto
+ * @data {line-height} 67px
+ * @data {font-style} normal
+ * @data {font-weight} 300
+ */
+
+/**
+ * @style Heading 1
+ * @selector h1
+ * @data {font-size} 40px
+ * @data {font-family} Roboto
+ * @data {line-height} 48px
+ * @data {font-style} normal
+ * @data {font-weight} 500
+ */
+
+/**
+ * @style Heading 2
+ * @selector h2
+ * @data {font-size} 32px
+ * @data {font-family} Roboto
+ * @data {line-height} 38px
+ * @data {font-style} normal
+ * @data {font-weight} 500
+ */
+
+/**
+ * @style Heading 3
+ * @selector h3
+ * @data {font-size} 28px
+ * @data {font-family} Roboto
+ * @data {line-height} 34px
+ * @data {font-style} normal
+ * @data {font-weight} 500
+ */
+
+/**
+ * @style Heading 4
+ * @selector h4
+ * @data {font-size} 24px
+ * @data {font-family} Roboto
+ * @data {line-height} 28px
+ * @data {font-style} normal
+ * @data {font-weight} 500
+ */
+
+/**
+ * @style Heading 5
+ * @selector h5
+ * @data {font-size} 20px
+ * @data {font-family} Roboto
+ * @data {line-height} 24px
+ * @data {font-style} normal
+ * @data {font-weight} 500
+ */
+
+/**
+ * @style Heading 6
+ * @selector h6
+ * @data {font-size} 16px
+ * @data {font-family} Roboto
+ * @data {line-height} 19px
+ * @data {font-style} normal
+ * @data {font-weight} 500
+ */
+
+/**
+ * Additional information about headings can go here...
+ */
+
+
+ 
+/**
+ * Styling for common inline HTML5 elements.
+ * @section Inline Text Elements
+ * @parent Typography
+ * @example
+  <p>You can use the mark tag to <mark>highlight</mark> text.</p>
+  <p><del>This line of text is meant to be treated as deleted text.</del></p>
+  <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+  <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+  <p><u>This line of text will render as underlined</u></p>
+  <p><small>This line of text is meant to be treated as fine print.</small></p>
+  <p><strong>This line rendered as bold text.</strong></p>
+  <p><em>This line rendered as italicized text.</em></p>
+*/
+
+
+/**
+ * For quoting blocks of content from another source within your document.
+ * @name Blockquote
+ * @parent Typography
+ * @example
+  <blockquote class="blockquote">
+    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+    <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+  </blockquote>
+ */

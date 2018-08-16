@@ -1,0 +1,144 @@
+/**
+ * Motion brings personality, tone, rhythm, and purpose to otherwise static objects.
+ * When used properly, UI motion should feel like a well choreographed dance,
+ * with all of the elements acting and reacting to one another in sync.
+ *
+ * @section Motion
+ * @parent Demos
+ * @package
+ * @nofollow
+ *
+ */
+ 
+ 
+ 
+.duration-sample{
+  padding: 1.5rem;
+  margin: -1.5rem;
+  div{
+    display:block;
+    width: 30px;
+    height: 30px;
+    background: red;
+    transition: transform 1s;
+    transform: translateX(0px);
+  }
+  &:hover{
+    div{
+      transform: translateX(300px);
+    }
+  }
+}
+
+
+/**
+ * Movement should be slow enough that the user can recognize what's happening,
+ * but fast enough that they are never waiting.
+ * The magnitude of change in an animation and its importance combine to determine its duration.
+ * Most animations in our component library last between 100 and 300 milliseconds.
+ *
+ * @set Duration
+ * @parent Motion
+ */
+ 
+/**
+ * Used in buttons and small components.
+ * @name Fast
+ * @value $duration-fast
+ * @value {ms} 150ms
+ * @example
+ * <div class="duration-sample duration-fast"><div></div></div>
+ */
+$duration-fast: 150ms;
+
+.duration-fast{
+  transition-duration: $duration-fast !important;
+}
+
+/**
+ * Used with Alerts, Table and Lists effects.
+ * @name Soft
+ * @value $duration-soft
+ * @value {ms} 250ms
+ * @example
+ * <div class="duration-sample duration-soft"><div></div></div>
+ */
+$duration-soft: 250ms;
+
+.duration-soft{
+  transition-duration: $duration-soft !important;
+}
+
+/**
+ * Used in Panels and Modals.
+ * @name Medium
+ * @value $duration-medium
+ * @value {ms} 350ms
+ * @example
+ * <div class="duration-sample duration-medium"><div></div></div>
+ */
+$duration-medium: 350ms;
+
+.duration-medium{
+  transition-duration: $duration-medium !important;
+}
+
+/**
+ * Used for page transitions
+ * @name Long
+ * @value $duration-long
+ * @value {ms} 600ms
+ * @example
+ * <div class="duration-sample duration-long"><div></div></div>
+ */
+$duration-long: 600ms;
+
+.duration-long{
+  transition-duration: $duration-long !important;
+}
+
+
+
+/**
+ * Strictly linear movement appears strange to the human eye.
+ * An animation should accelerate and decelerate smoothly throughout its duration to appear as natural as possible.
+ *
+ * @set Easing
+ * @parent Motion
+ */
+ 
+/**
+ * The base cubic-bezier is used for the majority of animations.
+ * Especially when extra context is needed or when an element is removed from the screen
+ * but easily accessible (i.e. slide out navigation panel).
+ * Acceleration and deceleration occur asymmetrically to feel natural.
+ * This means that more emphasis is placed on the end of the curve than at the beginning.
+ * In most cases, a user will need greater easing at the end of a movement to allow their eye to register the new state of the element.
+ *
+ * @name Base
+ * @value $easing-base
+ * @value {fn} [cubic-bezier(0.5, 0, 0.1, 1)]
+ */
+$easing-base: cubic-bezier(0.5, 0, 0.1, 1);
+
+/**
+ * The ease-out cubic-bezier is used for adding elements to the stage or changing on-screen states at a users' input.
+ * Ease-out is a much more dramatic curve because it is used for moving elements onto the stage.
+ * In which case, the object will slowly come to rest allowing the user to adjust to its arrival.
+ *
+ * @name EaseOut
+ * @value $easing-ease-out
+ * @value {fn} [cubic-bezier(0, 0, 0.25, 1)]
+ */
+$easing-ease-out: cubic-bezier(0, 0, 0.25, 1);
+
+/**
+ * The ease-in cubic-bezier is used primarily for removing elements from the screen or stage.
+ * Ease-in does not need as much easing since it is primarily used for objects exiting the stage.
+ * Therefore, slow it slightly to allow the user to recognize that it is exiting before speeds out of view.
+ *
+ * @name EaseIn
+ * @value $easing-ease-in
+ * @value {fn} [cubic-bezier(0.25, 0, 0, 1)]
+ */
+$easing-ease-in: cubic-bezier(0.25, 0, 1, 1);

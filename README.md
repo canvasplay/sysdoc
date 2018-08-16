@@ -1,2 +1,2 @@
 # system-docs
-Comment Parser for Design Systems
+Documentation Generator for Design Systems

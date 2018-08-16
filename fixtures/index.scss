@@ -1,0 +1,57 @@
+/**
+ * @md /docs/getting-started.md
+ * @package
+ */
+
+/**
+ * @md /docs/configuration.md
+ * @package
+ */
+ 
+/**
+ * @md /docs/comments.md
+ * @package
+ */
+
+
+/**
+ * All doclets will follow these global rules.
+ * @section Global Rules
+ */
+
+/**
+ * @doc Tag name
+ * @description
+ * The name part of a tag definition will get delimited by a breakline `\n`
+ * or by a dash `-`, depending on what gets found first.
+ */
+
+/**
+ * @doc Source order
+ * @description
+ * The parser asumes the source code is ordered to correctly resolve comments hierarchy.
+ * Basically this means a doclet can't be child of another doclet that is declared later in source.
+ */
+
+/**
+ * @doc Reserved Tags
+ * @description
+ *
+ */
+
+/**
+ * @doc Reserved Types
+ * @description
+ *
+ */
+
+/**
+ * @doc Reserved Names
+ * @description
+ * global, index
+ *
+ */
+
+/** @include /docs/tags.scss */
+/** @include /docs/entities.scss */
+/** @include /demos/index.scss */

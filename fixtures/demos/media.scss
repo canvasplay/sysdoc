@@ -1,0 +1,37 @@
+/**
+ * Example of documenting a BEM module
+ * @module Media
+ * @selector .media
+ * @parent Components
+ */
+.media{
+  
+  /**
+   * Place media elements in reverse order
+   * @modifier Media Reverse
+   * @selector .media--reverse
+   */
+  &--reverse{}
+  
+  /**
+   * Fancy zooming on card's image on mouse over.
+   * @modifier Media Zoom
+   * @selector .media--zoom
+   */
+  &--zoom{}
+  
+  /**
+   * Media image element.
+   * @element Media Image
+   * @selector .media__img
+   */
+  &__img{}
+  
+  /**
+   * Media body content element.
+   * @element Media Content
+   * @selector .media__content
+   */
+  &__content{}
+   
+}

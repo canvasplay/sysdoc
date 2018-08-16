@@ -1,0 +1,1 @@
+<pre class="styl-doc__code"><code><%- source %></code></pre>
