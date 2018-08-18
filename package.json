@@ -1,7 +1,7 @@
 {
   "name": "sysdoc",
-  "version": "1.0.1",
-  "description": "Comment Parser for Design Systems",
+  "version": "1.0.2",
+  "description": "Documentation Generator for Design Systems",
   "main": "index.js",
   "scripts": {
     "docs": "node docs",
