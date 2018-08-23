@@ -47,6 +47,7 @@ var LOAD_TEMPLATES = function(callback){
       //compile template
       try{
         template = _.template(data);
+        console.log(file);
       }
       catch(e){
         throw new Error('Error processing template "'+file+'": '+e);
@@ -95,7 +96,7 @@ var renderDoclet = function(doc, force, depth){
     throw new Error('invalid doclet!');
   
   //do not render doclets with @package
-  if(doc.package && !force)
+  if(doc.package && !force && !doc.sysdoc)
     return '';
     
   var tpl = resolveDocTemplate(doc);
@@ -118,6 +119,9 @@ var renderDoclet = function(doc, force, depth){
       var json = plugins.beautify.js(JSON.stringify(generateSysDocObject(doc)));
       result = TEMPLATES['sysdoc']({source:source}) + TEMPLATES['sysdoc']({source:json});
     }
+    else if(doc.sysdoc.type==='comment'){
+      result = TEMPLATES['sysdoc']({source:source});
+    }
     else{
       result = '<div class="styl-doc__example">'+result+'</div>' + TEMPLATES['sysdoc']({source:source});
     }
@@ -127,6 +131,8 @@ var renderDoclet = function(doc, force, depth){
 
 };
 
+// WARNING: does not work properly
+// Any tag after a blacklisted tag also gets ignored...
 var generateSysDocSource = function(doc){
 
   var whitelist = doc.sysdoc.whitelist;
@@ -340,7 +346,7 @@ var GENERATE = function(){
 
 var GENERATE_RECURSIVE = function(doc){
   
-  if(doc.package){
+  if(doc.package && !doc.sysdoc){
     var pathname = utils.getDocPathName(doc);
     utils.writeFile(SETTINGS.outputPath + pathname + '.html', render('index',{
       sections: COMMENTS_TREE,

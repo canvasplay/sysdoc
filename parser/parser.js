@@ -7,6 +7,12 @@ var parseCommentsOptions = {
 };
 
 
+let ACCESS = {
+  ALL: 'all',
+  PUBLIC: 'public',
+  PRIVATE: 'private'
+};
+
 // these key properties are used internally by the parser,
 // flaging them as reserved tags we prevent data overwriting
 var reservedTags = [
@@ -44,8 +50,6 @@ var reservedNames = [
 var DocletParser = function(opts){
   
   this.options = opts;
-  
-  console.log(Object.keys(TagProcessors).sort() );
   
   return this;
   
@@ -117,9 +121,16 @@ DocletParser.prototype.processComments = function(comments, url, isRoot){
 
   }
 
-  //resolve doclets hierarchy only if is a root call
-  if(isRoot)
+  //if is a root call
+  if(isRoot){
+    
+    //resolve doclets hierarchy
     doclets = this.resolveDocletHierachy(doclets);
+    
+    //filter by access type
+    doclets = this.filterByAccessType(doclets);
+    
+  }
 
   //return resulting doclets
   return doclets;
@@ -176,7 +187,7 @@ DocletParser.prototype.processDoclet = function(doc){
       }
       
       //custom processing when autotyping
-      if(autotyping) o = TagProcessors['name'](this,t,o);
+      if(autotyping) o = TagProcessors.name(this,t,o);
       
       //process the tag
       else o = (TagProcessors[t.tag] || TagProcessors._)(this, t, o);
@@ -184,6 +195,14 @@ DocletParser.prototype.processDoclet = function(doc){
     }
     
   }
+
+
+  //process ignore
+  if(o && o.ignore && !o.sysdoc){
+    console.log(o.sysdoc);
+    o = null;
+  }
+
   
   return (o)? (DocProcessors[o.type] || DocProcessors._)(this, o) : o;
   
@@ -215,7 +234,36 @@ DocletParser.prototype.resolveDocletHierachy = function(doclets){
   
   return doclets;
   
-}
+};
+
+DocletParser.prototype.filterByAccessType = function(doclets){
+  
+  var type = this.options.accessType || ACCESS.ALL;
+  
+  if(type === ACCESS.ALL)
+    return doclets;
+    
+  var result = [];
+
+  for (var i=0; i<doclets.length; i++){
+    
+    var doc = doclets[i];
+    
+    if(!doc.access || doc.access === type){
+      
+      if(doc.children && doc.children.length){
+        doc.children = this.filterByAccessType(doc.children);
+      }
+      result.push(doc);
+      
+    }
+    
+  }
+  
+  return result;
+  
+};
+
 
 
 
@@ -254,13 +302,22 @@ TagProcessors._ = function(parser, tag, o){
     'name': tag.name,
     'description': tag.description
   };
+  
+  if(tag.default) value.default = tag.default;
+  if(tag.optional) value.optional = tag.optional;
 
   return processTagValueAsArrayFriendly(o, value, tag.tag);
   
 };
 
 TagProcessors.ignore = function(parser, tag, o){
-  return;
+  o.ignore = true;
+  return o;
+};
+
+TagProcessors.access = function(parser, tag, o){
+  o.access = tag.name.trim();
+  return o;
 };
 
 TagProcessors.sysdoc = function(parser, tag, o){
@@ -277,7 +334,7 @@ TagProcessors.sysdoc = function(parser, tag, o){
     }
   };
   o.sysdoc = {
-    type: (tag.type==='data')? 'data' : 'source',
+    type: (!tag.type)? 'data' : tag.type,
     whitelist: whitelist,
     blacklist: blacklist
   }
@@ -466,7 +523,6 @@ TagProcessors.src = function(parser, tag, o){
 };
 
 
-
 /**
  * Doclet Processors
  */
@@ -494,12 +550,15 @@ DocProcessors.section = function(parser, doc){
 
 DocProcessors.include = function(parser, doc){
 
+  //do not process if flagged as sysdoc
+  if(doc.sysdoc) return doc;
+  
   //get include target url based on doc's name
   var url = utils.resolveUrl(doc.name, doc.metadata.file, parser.options);
   
   //return processed doclets in url
   return parser.parseFile(url);
-  
+
 };
 
 DocProcessors.md = function(parser, doc){
@@ -507,7 +566,6 @@ DocProcessors.md = function(parser, doc){
   //get include target url based on doc's name
   var url = utils.resolveUrl(doc.name, doc.metadata.file, parser.options);
   
-  console.log(url);
   //get file contents
   doc.content = utils.readFile(url);
   

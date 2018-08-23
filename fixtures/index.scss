@@ -1,4 +1,33 @@
 /**
+ * Take a number and process it against another optional number in a generic manner.
+ * @method test
+ * @param {int} n The number to be processed
+ * @param {int} [y=0] Other number to be processed
+ * @param {int} [z=0] Another one number to be processed
+ * @return {int} Resulting processed number
+ */
+
+
+/**
+ * Publish method, call it generate the documentation.
+ * @method publish
+ * @param {object} settings Optional publish settings
+ * @return {bool} Success or not
+ */
+
+/**
+ * Settings object passed to the parser's `publish` method.
+ * @object settings
+ * @prop {string} [out="docs/"] Destination folder
+ * @prop {blob pattern} [templates] origin for custome template files, extends and overwrites the default sysdoc templates
+ * @prop {string} [accessType="all"] AccessType of the doclets included in generated documentation
+ * @prop {string} title Main title
+ * @prop {string} description Main description
+ * @prop {string} [readme] Url of an additional markdown file containing an introductory description.
+ */
+
+
+/**
  * @md /docs/getting-started.md
  * @package
  */
