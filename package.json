@@ -1,6 +1,6 @@
 {
   "name": "sysdoc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Documentation Generator for Design Systems",
   "main": "index.js",
   "scripts": {
