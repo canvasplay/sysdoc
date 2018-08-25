@@ -26,6 +26,7 @@ var reservedTags = [
   'metadata'
 ];
 
+/*
 // this looks like a list of custom tag parsers...
 // why dont just keys in TagParsers object...?
 var reservedTypes = [
@@ -39,8 +40,10 @@ var reservedTypes = [
   'description',
   'name',
   'type',
-  'src'
+  'src',
+  'sysdoc'
 ];
+*/
 
 var reservedNames = [
   'index',
@@ -196,13 +199,8 @@ DocletParser.prototype.processDoclet = function(doc){
     
   }
 
-
-  //process ignore
-  if(o && o.ignore && !o.sysdoc){
-    console.log(o.sysdoc);
-    o = null;
-  }
-
+  //process ignore bool flag
+  if(o && o.ignore && !o.sysdoc) o = null;
   
   return (o)? (DocProcessors[o.type] || DocProcessors._)(this, o) : o;
   
@@ -334,7 +332,7 @@ TagProcessors.sysdoc = function(parser, tag, o){
     }
   };
   o.sysdoc = {
-    type: (!tag.type)? 'data' : tag.type,
+    type: tag.type,
     whitelist: whitelist,
     blacklist: blacklist
   }
@@ -350,7 +348,7 @@ TagProcessors.nofollow = processTagAsBoolFlag;
 TagProcessors.base = processTagAsBoolFlag;
 
 TagProcessors.parent = function(parser, tag, o){
-  o.parent = utils.slugify(tag.name);
+  o.parent = utils.slugify(tag.name+' '+tag.description);
   return o;
 };
 
@@ -440,7 +438,7 @@ TagProcessors.content = function(parser, tag, o){
     var type = (url+'').split('.').pop();
     
     content = {
-      type: (url+'').split('.').pop() || tag.type,
+      type: (url+'').split('.').pop() || tag.type || 'md',
       value: contents
     }
 
@@ -448,7 +446,7 @@ TagProcessors.content = function(parser, tag, o){
   else{
     
     content = {
-      type: tag.type,
+      type: tag.type || 'md',
       value: (tag.name + ' ' + tag.description).trim()
     }
     
@@ -521,6 +519,13 @@ TagProcessors.src = function(parser, tag, o){
   };
   return processTagValueAsArrayFriendly(o, src, tag.tag);
 };
+
+
+
+//define a calculated list of reserved types based on exsisting tag processors
+var reservedTypes = Object.keys(TagProcessors);
+console.log(reservedTypes);
+
 
 
 /**

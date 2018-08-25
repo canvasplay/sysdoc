@@ -95,7 +95,7 @@ var renderDoclet = function(doc, force, depth){
   if(!doc || !doc.type)
     throw new Error('invalid doclet!');
   
-  //do not render doclets with @package
+  //do not render doclets with the @package flag except its a sysdoc
   if(doc.package && !force && !doc.sysdoc)
     return '';
     
@@ -112,12 +112,12 @@ var renderDoclet = function(doc, force, depth){
     throw new Error('Error rendering template: '+doc.type+':'+doc.name+ ' -> '+e );
   }
   
-  //special flag @sysdoc
+  //additional treatment if @sysdoc
   if(doc.sysdoc){
     var source = generateSysDocSource(doc);
     if(doc.sysdoc.type==='data'){
       var json = plugins.beautify.js(JSON.stringify(generateSysDocObject(doc)));
-      result = TEMPLATES['sysdoc']({source:source}) + TEMPLATES['sysdoc']({source:json});
+      result = TEMPLATES['sysdoc']({ source: source, json: json });
     }
     else if(doc.sysdoc.type==='comment'){
       result = TEMPLATES['sysdoc']({source:source});
@@ -230,8 +230,10 @@ var generateSysDocObject = function(doc){
         delete obj[keys[i]];
     }
     if(obj.children){
-      for(var c=0;c<obj.children.length;c++){
-        obj.children = clean(obj.children[c]);
+      var childs = obj.children;
+      obj.children = [];
+      for(var c=0;c<childs.length;c++){
+        obj.children.push(clean(childs[c]));
       }
     }
     return obj;
@@ -257,6 +259,25 @@ var PARSE_COMMENTS = function(){
   RUN();
 }
 
+var PARSE_FILES = function(){
+
+  var code = '';
+  
+  var parser = new Parser(SETTINGS);
+  
+  return Promise.all([
+    
+    utils.readFileGlobs(SETTINGS.files, function(data, file) {
+      code+= data;
+    })
+    
+  ]).then(function(){
+    COMMENTS = parser.parse(code, true);
+    RUN()
+  })
+  .catch(function(err){ throw err });
+
+};
 
 /////////////////////////////////////////////////////////////////////////////////////
 //	HIERACHICAL COMMENTS TREE
@@ -305,7 +326,7 @@ var resolveDocLinkRecursive = function(doc,file){
   if(doc.package){
     file = pathname +'.html';
     //adding an empty hash prevents re-loading the current page
-    //just acts as go to top link
+    //just acts as go to top link and we save a server request ;)
     doc.metadata.link = file+'#';
   }
   else{
@@ -378,7 +399,8 @@ var RUN = function(){
 var TASK_QUEUE = [
   //LOAD_CONFIG,
   LOAD_TEMPLATES,
-  PARSE_COMMENTS,
+  //PARSE_COMMENTS,
+  PARSE_FILES,
   BUILD_COMMENTS_TREE,
   RESOLVE_LINKS,
   GENERATE,
@@ -390,7 +412,9 @@ var TASK_QUEUE = [
 //	SETTINGS
 
 var SETTINGS = {
-  cssFile: 'fixtures/index.scss',
+  files: [
+    'fixtures/index.scss'
+  ],
   outputPath: 'docs/',
   templates: [
     'template/**/*.tpl',
