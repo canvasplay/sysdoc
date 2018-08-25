@@ -64,7 +64,11 @@ DocletParser.prototype.parse = function(str, isRoot){
   var comments = parseComments(str, parseCommentsOptions);
   
   //process comments
-  var doclets = this.processComments(comments, null, isRoot);
+  var doclets = this.processComments(comments, null);
+  
+  if(isRoot){
+    doclets = this.postProcessComments(doclets);
+  }
   
   //return processed comments
   return doclets;
@@ -80,14 +84,39 @@ DocletParser.prototype.parseFile = function(url, isRoot){
   var comments = parseComments(contents, parseCommentsOptions);
   
   //process comments
-  var doclets = this.processComments(comments, url, isRoot);
+  var doclets = this.processComments(comments, url);
+
+  if(isRoot){
+    doclets = this.postProcessComments(doclets);
+  }
+
+  //return processed comments
+  return doclets;
+
+};
+
+DocletParser.prototype.parseFiles = function(files){
+  
+  var doclets = [];
+
+  for(var i=0; i< files.length; i++){
+    
+    //read file contents sync
+    var docs = this.parseFile(files[i]);
+
+    //add comments to collection
+    doclets = doclets.concat(docs);
+    
+  }
+
+  doclets = this.postProcessComments(doclets);
   
   //return processed comments
   return doclets;
 
 };
 
-DocletParser.prototype.processComments = function(comments, url, isRoot){
+DocletParser.prototype.processComments = function(comments, url){
   
   //declare resulting doclets collection
   var doclets = [];
@@ -124,21 +153,25 @@ DocletParser.prototype.processComments = function(comments, url, isRoot){
 
   }
 
-  //if is a root call
-  if(isRoot){
-    
-    //resolve doclets hierarchy
-    doclets = this.resolveDocletHierachy(doclets);
-    
-    //filter by access type
-    doclets = this.filterByAccessType(doclets);
-    
-  }
-
   //return resulting doclets
   return doclets;
 
 };
+
+
+DocletParser.prototype.postProcessComments = function(doclets){
+  
+  //resolve doclets hierarchy
+  doclets = this.resolveDocletHierachy(doclets);
+  
+  //filter by access type
+  doclets = this.filterByAccessType(doclets);
+  
+  //return resulting doclets
+  return doclets;
+
+};
+
 
 DocletParser.prototype.processDoclet = function(doc){
 
@@ -211,6 +244,9 @@ DocletParser.prototype.resolveDocletHierachy = function(doclets){
   //parent ref
   var ref;
 
+  //url file ref
+  var file;
+  
   //resolve all doclets' parent property iterative
   for (var i=0; i<doclets.length; i++){
     
@@ -219,15 +255,22 @@ DocletParser.prototype.resolveDocletHierachy = function(doclets){
     //explicit parent definition?
     var explicitParent = (doc.parent)? true : false;
     
+    //check for new file
+    var newFile = (doc.metadata.file && doc.metadata.file!== file)? true : false;
+    
     //resolve parent doclet
-    var parent = (explicitParent)? utils.getDocletParent(doc, doclets) || '' : ref;
+    var parent = (explicitParent)? utils.getDocletParent(doc, doclets) || '' : (newFile)? '' : ref;
     
     //set parent
     doc.parent = (!parent)? '' : utils.getDocPathName(parent);
     
     //if parent was resolved by explicit definition use this doc as new parent ref
     if(explicitParent) ref = doc;
+    else if(newFile) ref = null;
     
+    //save file for reference
+    file = doc.metadata.file;
+
   }
   
   return doclets;

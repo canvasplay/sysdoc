@@ -249,33 +249,18 @@ var generateSysDocObject = function(doc){
 
 var COMMENTS = [];
 
-var PARSE_COMMENTS = function(){
+var PARSE_FILES = function(){
   
+  //instance a new parser using the given settings
   var parser = new Parser(SETTINGS);
-  COMMENTS = parser.parseFile(SETTINGS.cssFile, true);
   
-  utils.writeFile(SETTINGS.outputPath + 'data.json', JSON.stringify(COMMENTS));
+  //find all files to be parsed
+  var files = utils.getGlobFiles(SETTINGS.files);
+
+  //do the parsing!
+  COMMENTS = parser.parseFiles(files);
   
   RUN();
-}
-
-var PARSE_FILES = function(){
-
-  var code = '';
-  
-  var parser = new Parser(SETTINGS);
-  
-  return Promise.all([
-    
-    utils.readFileGlobs(SETTINGS.files, function(data, file) {
-      code+= data;
-    })
-    
-  ]).then(function(){
-    COMMENTS = parser.parse(code, true);
-    RUN()
-  })
-  .catch(function(err){ throw err });
 
 };
 

@@ -86,6 +86,39 @@ utils.resolveUrl = function(url, file, opts){
 };
 
 
+/**
+ * Gets an array of matching filenames for the given set of glob patterns
+ * @param {String | Array<String>} patterns
+ * @return {Array<String>}
+ */
+utils.getGlobFiles = function(patterns){
+
+  var result = [], matching = [], ignore = [];
+  
+  //ensure patterns is array
+  patterns = (!Array.isArray(patterns) ? [patterns] : patterns);
+
+  //separate into matching and ignore patterns
+  patterns.forEach(function(value){
+    if(value.indexOf('!')===0)
+      ignore.push(value.substr(1));
+    else
+      matching.push(value);
+  });
+  
+  //do the glob for each matching pattern
+  matching.forEach(function(pattern){
+    var files = glob.sync(pattern,{ ignore: ignore });
+    result = result.concat(files);
+  });
+    
+  //remove duplicate files
+  return result.filter(function(value, index, self){
+    return self.indexOf(value) === index;
+  });
+
+};
+
 
 /**
  * Simple readFileSync wrapper
