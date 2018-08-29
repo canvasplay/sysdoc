@@ -411,7 +411,7 @@ var SETTINGS = {
   rootPath: '',
   customPaths: {
     'test': 'testing/custom/path/',
-    'examples': 'test/examples/'
+    'examples': 'test/examples2/'
   },
   version: '1.0.0',
   ignorePackage: false,

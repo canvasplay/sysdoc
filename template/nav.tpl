@@ -2,7 +2,7 @@
 <ul>
   <% _.each(items, function(item){ %>
     <% if(item.toc){ %>
-      <%= render('toc',{ items: item.toc, link: item.metadata.link }) %>
+      <%= render('toc',{ doc: item, items: item.toc, link: item.metadata.link }) %>
     <% }else{ %>
       <li>
         <a href="<%= item.metadata.link %>"><%= item.name %></a>

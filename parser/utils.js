@@ -93,21 +93,21 @@ utils.resolveUrl = function(url, file, opts){
  */
 utils.getGlobFiles = function(patterns){
 
-  var result = [], matching = [], ignore = [];
+  var result = [], match = [], ignore = [];
   
   //ensure patterns is array
   patterns = (!Array.isArray(patterns) ? [patterns] : patterns);
 
-  //separate into matching and ignore patterns
+  //split into match and ignore patterns
   patterns.forEach(function(value){
     if(value.indexOf('!')===0)
       ignore.push(value.substr(1));
     else
-      matching.push(value);
+      match.push(value);
   });
   
-  //do the glob for each matching pattern
-  matching.forEach(function(pattern){
+  //do the glob for each match pattern
+  match.forEach(function(pattern){
     var files = glob.sync(pattern,{ ignore: ignore });
     result = result.concat(files);
   });

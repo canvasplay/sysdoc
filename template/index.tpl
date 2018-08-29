@@ -36,5 +36,21 @@
     <script src="<%= url %>"></script>
   <% }) %>
 
+  <div id="VIEW">
+    
+    <div class="bar">
+      SysDoc Responsive Playground
+      <a href="javascript:closeIframe();"><i class="material-icons">close</i></a>
+    </div>
+    <div class="sizes">
+      <a class="_full" href="javascript:setIframeWidth();"><span>100%</span></a>
+      <a class="_1024" href="javascript:setIframeWidth(1024);"><span>1024px</span></a>
+      <a class="_768" href="javascript:setIframeWidth(768);"><span>768px</span></a>
+      <a class="_640" href="javascript:setIframeWidth(640);"><span>640px</span></a>
+      <a class="_480" href="javascript:setIframeWidth(480);"><span>480px</span></a>
+      <a class="_360" href="javascript:setIframeWidth(360);"><span>360px</span></a>
+    </div>
+    
+  </div>
 </body>
 </html>

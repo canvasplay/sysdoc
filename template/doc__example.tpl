@@ -1,6 +1,6 @@
 <% if(doc.example){ %>
   <% var exs = (doc.example.push)? doc.example : [doc.example] %>
-  <% _.each(exs, function(ex){ %>
+  <% _.each(exs, function(ex, index){ %>
   
     <%
       var name = ex.name;
@@ -15,7 +15,9 @@
     <% } %>
   
     <% if(content && type === 'html'){ %>
-      <div class="styl-doc__example"><%= content %></div>
+      <% var exId = 'EX_'+doc.id+'_'+index; %>
+      <a href="javascript:createExampleIframe('<%= exId %>')">open</a><br>
+      <div class="styl-doc__example" id="<%= exId %>"><%= content %></div>
     <% } %>
     
     <% if(code!== ''){ %>

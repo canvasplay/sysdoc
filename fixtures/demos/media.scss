@@ -1,8 +1,23 @@
 /**
- * Example of documenting a BEM module
+ * Example about documenting a BEM module
  * @module Media
  * @selector .media
  * @parent Components
+ * @example
+ <div class="media">
+  <img class="media__img"
+    style="width: 3rem; margin-right: .75rem; border-radius: 50%;"
+    src="https://s.gravatar.com/avatar/555b32193b1bd2957a9352c5d196926c?size=496&default=retro" />
+  <div class="media__content">
+    <small class="text-muted">2 days ago</small>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  </div>
+ </div>
+----
+ <div class="media">
+  <img class="media__img" src="..." />
+  <div class="media__content">...</div>
+ </div>
  */
 .media{
   
@@ -10,6 +25,21 @@
    * Place media elements in reverse order
    * @modifier Media Reverse
    * @selector .media--reverse
+   * @example
+   <div class="media media--reverse">
+    <div class="media__content text-right">
+      <small class="text-muted">2 days ago</small>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <img class="media__img"
+      style="width: 3rem; margin-left: .75rem; border-radius: 50%;"
+      src="https://s.gravatar.com/avatar/555b32193b1bd2957a9352c5d196926c?size=496&default=retro" />
+   </div>
+  ----
+   <div class="media media--reverse">
+    <div class="media__content">...</div>
+    <img class="media__img" src="..." />
+   </div>
    */
   &--reverse{}
   

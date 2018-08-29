@@ -330,7 +330,7 @@ var processTagValueAsArrayFriendly = function(o, value, key){
 // p.e. @nofollow, @base, ...
 // If the tag is defined just set define a property with that name and true as value
 
-var processTagAsBoolFlag = function(parser, tag, o){
+var BoolFlagTagProcessor = function(parser, tag, o){
   o[tag.tag] = true;
   return o;
 };
@@ -351,10 +351,7 @@ TagProcessors._ = function(parser, tag, o){
   
 };
 
-TagProcessors.ignore = function(parser, tag, o){
-  o.ignore = true;
-  return o;
-};
+TagProcessors.ignore = BoolFlagTagProcessor;
 
 TagProcessors.access = function(parser, tag, o){
   o.access = tag.name.trim();
@@ -384,11 +381,11 @@ TagProcessors.sysdoc = function(parser, tag, o){
 
 TagProcessors.package = function(parser, tag, o){
   if (parser.options.ignorePackage) return o;
-  else return processTagAsBoolFlag(parser, tag, o);
+  else return BoolFlagTagProcessor(parser, tag, o);
 };
 
-TagProcessors.nofollow = processTagAsBoolFlag;
-TagProcessors.base = processTagAsBoolFlag;
+TagProcessors.nofollow = BoolFlagTagProcessor;
+TagProcessors.base = BoolFlagTagProcessor;
 
 TagProcessors.parent = function(parser, tag, o){
   o.parent = utils.slugify(tag.name+' '+tag.description);
@@ -564,10 +561,14 @@ TagProcessors.src = function(parser, tag, o){
 };
 
 
+TagProcessors.follow = function(parser, tag, o){
+  o.follow = parseInt(tag.name);
+  return o;
+};
+
 
 //define a calculated list of reserved types based on exsisting tag processors
 var reservedTypes = Object.keys(TagProcessors);
-console.log(reservedTypes);
 
 
 
@@ -652,13 +653,15 @@ DocProcessors.md = function(parser, doc){
   
   var cleanToc= function(t){
     for(var i=0;i<t.length;i++){
-      t[i].name = t[i].content;
-      delete t[i].content;
-      delete t[i].seen;
-      //delete t[i].lvl;
-      delete t[i].i;
-      if(t[i].children)
-        t[i].children = cleanToc(t[i].children);
+      var o = {
+        name: t[i].content,
+        slug: t[i].slug,
+        lvl: t[i].lvl
+      };
+      if(t[i].children){
+        o.children = cleanToc(t[i].children);
+      }
+      t[i] = o;
     }
     return t;
   }

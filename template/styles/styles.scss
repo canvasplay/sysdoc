@@ -3,9 +3,10 @@
 
 html,
 body {
-    //smooth scrolling
-    //scroll-behavior: smooth;
-    background: white !important;
+  background: white !important;
+  height: 100%;
+  min-height: 100%;
+
 }
 
 nav {
@@ -305,6 +306,145 @@ content .section {
   }
   [class*="col-"]:last-child{
     &:after{ display: none; }
+  }
+  
+}
+
+#VIEW{
+  display: block;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 900;
+  background: #FAFAFA;
+
+  .bar{
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 27px;
+    overflow: hidden;
+    border-bottom: 1px solid #CCC;
+    text-align: center;
+    color: #333;
+    font-size: 12px;
+    padding: 7px 0;
+    line-height: 1;
+    
+    a{
+      display: block;
+      float: right;
+      margin: -6px;
+      padding: 4px 12px;
+      i{
+        font-size: 16px;
+      }
+      color: #999;
+      &:hover{
+        color: inherit;
+      }
+    }
+  }
+  .sizes{
+    display: block;
+    position: fixed;
+    top: 27px; left: 0; right: 0;
+    height: 20px;
+    overflow: hidden;
+    border-top: 2px solid #FAFAFA;
+    border-bottom: 2px solid #FAFAFA;
+    background: #E6E6E6;
+    line-height: 1;
+    
+    a{
+      display: block;
+      position: absolute;
+      top: 0; left: 50%;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      height: 20px;
+      font-size: 12px;
+      padding: 2px 0;
+      text-decoration:none;
+      border-left: 2px solid #FAFAFA;
+      border-right: 2px solid #FAFAFA;
+      color: #555;
+      > span{
+        visibility: hidden;
+      }
+      &:hover{
+        background: #D6D6D6;
+        > span{
+          visibility: visible;
+        }
+      }
+      &._full{
+        width: 100%;
+        margin-left: -50%;
+      }
+      &._1024{
+        width: 1024px;
+        margin-left: -512px;
+      }
+      &._768{
+        width: 768px;
+        margin-left: -384px;
+      }
+      &._640{
+        width: 640px;
+        margin-left: -320px;
+      }
+      &._480{
+        width: 480px;
+        margin-left: -240px;
+      }
+      &._360{
+        width: 360px;
+        margin-left: -180px;
+      }
+    }
+    
+  }
+  
+  iframe{
+    display: block;
+    position: fixed;
+    top: 64px;
+    bottom: 30px;
+    left: 50%;
+    width: 100%;
+    margin-left: -50%;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,.2);
+    border: 0;
+    height: 100%;
+    
+    &[data-width="1024"]{
+      width: 1024px;
+      margin-left: -512px;
+    }
+    &[data-width="768"]{
+      width: 768px;
+      margin-left: -384px;
+    }
+    &[data-width="640"]{
+      width: 640px;
+      margin-left: -320px;
+    }
+    &[data-width="480"]{
+      width: 480px;
+      margin-left: -240px;
+    }
+    &[data-width="360"]{
+      width: 360px;
+      margin-left: -180px;
+    }
+
+  }
+
+  display: none;
+  &.is-visible{
+    display:block;
   }
   
 }
