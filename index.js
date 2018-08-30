@@ -346,6 +346,9 @@ var GENERATE = function(){
     'children': COMMENTS_TREE
   });
   
+  //iframe.html
+  utils.writeFile(SETTINGS.outputPath + 'iframe.html', TEMPLATES['iframe'](getCtxData({})));
+  
   RUN();
   
 }

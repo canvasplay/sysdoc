@@ -50,7 +50,8 @@
       <a class="_480" href="javascript:setIframeWidth(480);"><span>480px</span></a>
       <a class="_360" href="javascript:setIframeWidth(360);"><span>360px</span></a>
     </div>
-    
+    <div id="WRAPPER">
+    </div>
   </div>
 </body>
 </html>
