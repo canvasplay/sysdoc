@@ -265,6 +265,48 @@ var PARSE_FILES = function(){
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
+//	GENERATE EXAMPLES
+
+var GENERATE_EXAMPLES = function(){
+
+  var docsHavingHtmlExamples = _.filter(COMMENTS, function(d){
+    return (d.example && d.example.type === 'html' && !d.sysdoc);
+  });
+  for(var i=0; i< docsHavingHtmlExamples.length; i++){
+    var doc = docsHavingHtmlExamples[i];
+    utils.writeFile(SETTINGS.outputPath + 'examples/'+utils.getDocPathName(doc)+'.html', TEMPLATES['index-example'](getCtxData({
+      content: doc.example.content
+    })));
+  }
+  
+  RUN();
+};
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+//	GENERATE SOURCE FILES
+
+var GENERATE_SOURCE_FILES = function(){
+
+  var files = _.map(COMMENTS, function(d){
+    return d.metadata.file;
+  });
+
+  files = files.filter(function(value, index, self){
+    return self.indexOf(value) === index;
+  });
+  
+  for(var i=0; i< files.length; i++){
+    var source = utils.readFile(files[i]);
+    utils.writeFile(SETTINGS.outputPath + 'sources/'+utils.urlify(files[i])+'.html', TEMPLATES['index-source'](getCtxData({
+      source: source
+    })));
+  }
+  
+  RUN();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
 //	HIERACHICAL COMMENTS TREE
 
 var COMMENTS_TREE = [];
@@ -328,6 +370,31 @@ var resolveDocLinkRecursive = function(doc,file){
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
+//	COPY THEME FILES
+
+var COPY_THEME_FILES = function(){
+  
+  var themePath = SETTINGS.theme;
+  var files = [];
+  
+  //get stylesheets
+  files = files.concat(utils.getGlobFiles(themePath+'/**/*.css'));
+  
+  //get scripts
+  files = files.concat(utils.getGlobFiles(themePath+'/**/*.js'));
+  
+  //copy all found files
+  for(var i=0; i< files.length; i++){
+    var src = files[i];
+    var target = SETTINGS.outputPath + src.substr(themePath.length);
+    utils.copyFile(src, target);
+  }
+  
+  
+  RUN();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
 //	GENERATE HTML DOCS
 
 var GENERATE = function(){
@@ -345,9 +412,6 @@ var GENERATE = function(){
     },
     'children': COMMENTS_TREE
   });
-  
-  //iframe.html
-  utils.writeFile(SETTINGS.outputPath + 'iframe.html', TEMPLATES['iframe'](getCtxData({})));
   
   RUN();
   
@@ -389,9 +453,12 @@ var TASK_QUEUE = [
   LOAD_TEMPLATES,
   //PARSE_COMMENTS,
   PARSE_FILES,
+  GENERATE_EXAMPLES,
+  GENERATE_SOURCE_FILES,
   BUILD_COMMENTS_TREE,
   RESOLVE_LINKS,
   GENERATE,
+  COPY_THEME_FILES,
   COMPLETE
 ];
 

@@ -16,7 +16,8 @@
   
     <% if(content && type === 'html'){ %>
       <% var exId = 'EX_'+doc.id+'_'+index; %>
-      <a href="javascript:createExampleIframe('<%= exId %>')">open</a><br>
+      <a href="javascript:createExampleIframe('<%= utils.getDocPathName(doc) %>')">test</a> |
+      <a target="_blank" href="examples/<%= utils.getDocPathName(doc) %>.html">open in new window ↱</a><br>
       <div class="styl-doc__example" id="<%= exId %>"><%= content %></div>
     <% } %>
     

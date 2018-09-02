@@ -4,22 +4,17 @@
 Lorem ipsum dolor sit amet consectetuer adipiscing elit alqut ament.
 
 ### Vision
-We want to find people who love their dogs as much as we love ours
-and surprise and delight them each and every month. Dogs aren’t pets,
-they’re family and they deserve the best treats, toys, and seat on the couch.
-We’re driven to be the people our dogs think we are. Dog people get it.
-      
-### Identity
-As humans, we love good, clean design—but dogs love fun.
-We are always looking to find the balance between clean and playful.
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
 
+### Identity
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
 
 ## Content
-Before your write for BarkBox, it's important to think about our readers.
+Before your write, it's important to think about our readers.
 Though our voice doesn't change much, our tone adapts to our users' feelings.
 
 ### Voice
-The foundation for communicating BarkBox products and brand message.
+The foundation for communicating our products and brand message.
 Our voice expresses the core of our personality, while bringing comfort,
 ease, and a sense of connection to our users.
 
@@ -63,6 +58,6 @@ Our forms offer proper use of semantic tags as well as appropriate labelings.
 Radio button and checkbox controls provide accessibility as well as design flexibility.
 
 ### Contrast
-It’s important for BarkBox to meet all web accessibility standards,
+It’s important for us to meet all web accessibility standards,
 including the minimum contrast ratios that the WCAG 2.0 specifies
 for text and background colors according to their AA level.

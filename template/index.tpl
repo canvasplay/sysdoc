@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%
     var css = (config.css)? (config.css.push)? config.css : [config.css] : [];
     _.each(css, function(url){
@@ -20,8 +21,9 @@
     <%= render('nav',{ items: sections, active: doc }) %>
     <br />
     <footer>
-      Documentation generated on<br>
-      <%= new Date() %>
+      Updated on<br>
+      <%= new Date() %><br>
+      Documentation generated with sysdoc ツ
     </footer>
   </nav>
 

@@ -1,28 +1,22 @@
-
-var onIframeReady = function(id){
-  var view = document.getElementById('VIEW');
-  var iframe = document.getElementById('IFRAME');
-  var el = document.getElementById(id.substr(1));
-  iframe.contentDocument.body.innerHTML = el.innerHTML;
-  document.body.classList.add('is-example');
-};
-
 var createExampleIframe = function(id){
   
   var wrapper = document.getElementById('WRAPPER');
   var iframe = document.createElement('iframe');
-  iframe.src = "iframe.html#"+id;
+  iframe.src = "examples/"+id+".html";
   iframe.id = "IFRAME";
   wrapper.appendChild(iframe);
+  document.body.classList.add('is-example');
   
 };
 
 var closeIframe = function(){
   
   var view = document.getElementById('VIEW');
+  var wrapper = document.getElementById('WRAPPER');
   var iframe = document.getElementById('IFRAME');
   document.body.classList.remove('is-example');
   iframe.parentNode.removeChild(iframe);
+  wrapper.setAttribute('data-width','');
   
 };
 

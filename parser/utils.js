@@ -19,6 +19,18 @@ utils.slugify = function(text){
     .replace(/-+$/, '');            // Trim - from end of text
 };
 
+utils.encodedStr = function(rawStr){
+  return rawStr.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+   return '&#'+i.charCodeAt(0)+';';
+  });
+};
+
+utils.urlify = function(url){
+  return url.toString().toLowerCase()
+    .replace(/\//g, '.');
+};
+
+
 utils.getDocletParent = function(doc, doclets){
   return doclets.filter((d)=>{return d.id===doc.parent && d.metadata.index<doc.metadata.index }).pop();
 };
@@ -139,6 +151,18 @@ utils.writeFile = function(filename, data){
   }
   catch(err){ console.log(err) }
 };
+
+/**
+ * Simple copyFileSync wrapper
+ */
+utils.copyFile = function(src, target){
+  try{
+    fse.copySync(src, target);
+    console.log("The file "+target+" was copied!");
+  }
+  catch(err){ console.log(err) }
+};
+
 
 /**
  * Asynchronously read a list of glob pattern files and pass the list of files to

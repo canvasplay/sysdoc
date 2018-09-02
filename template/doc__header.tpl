@@ -1,5 +1,6 @@
 <div class="styl-doc__header">
   <%= render('doc__pathname',{doc:doc}) %>
+  <small class="text-muted">Source: <a target="_blank" href="sources/<%= utils.urlify(doc.metadata.file) %>.html#L<%= doc.metadata.line %>" style="color: inherit;"><%= doc.metadata.file %>:<%= doc.metadata.line %></a></small>
   <%
     //var depth = utils.getDocDepth(doc);
     //var x = (Math.min(depth+1,6));
@@ -13,4 +14,5 @@
     </h<%= x %>>
     <% if(doc.selector){ %><p class="styl-doc__selector"><code><%= doc.selector %></code></p><% } %>
   <% } %>
+  
 </div>

@@ -36,7 +36,7 @@ nav {
         }
     }
     a{
-      color: #888;
+      color: #6c757d;
       &:hover{
         color: inherit;
         text-decoration: none;
@@ -60,9 +60,19 @@ nav {
   
   footer{
     font-size: .75rem;
-    color: #888;
+    color: #6c757d;
   }
   
+}
+
+h1{
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+h2{
+  font-size: 2.25rem;
+  font-weight: 600;
 }
 
 content {
@@ -91,7 +101,7 @@ content .section {
 }
 
 .styl-doc__pathname {
-  color: #888;
+  color: #6c757d;
   font-size: .8rem;
 }
 
@@ -230,6 +240,16 @@ content .section {
   padding: 1.5rem;
   color: #666;
   border-radius: .2rem;
+  code{
+    display: block;
+    &:target{
+      background: #BBB;
+      color: #333;
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      padding: 0 1.5rem;
+    }
+  }
 }
 .styl-doc__example + .styl-doc__code{
   margin-top: -.2rem;
@@ -248,7 +268,7 @@ content .section {
 }
 
 .styl-doc__details {
-  color: #888;
+  color: #6c757d;
   font-size: .8rem;
   line-height: 1.2;
   font-weight: initial;
