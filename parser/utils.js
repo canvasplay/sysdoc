@@ -112,6 +112,7 @@ utils.getGlobFiles = function(patterns){
 
   //split into match and ignore patterns
   patterns.forEach(function(value){
+    if(!value) return;
     if(value.indexOf('!')===0)
       ignore.push(value.substr(1));
     else

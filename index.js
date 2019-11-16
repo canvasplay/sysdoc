@@ -75,7 +75,7 @@ var getCtxData = function(data){
     plugins: plugins,
     utils: utils
   };
-  return (data)? _.extend(data,base) : base;
+  return Object.assign(data || {}, base);
 };
 
 var render = function(tplId, data){
