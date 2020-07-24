@@ -1,7 +1,7 @@
 var utils = require('./utils');
 var mdtoc = require('markdown-toc');
 
-var parseComments = require('comment-parser');
+var parseComments = require('comment-parser/parser.js');
 var parseCommentsOptions = {
   dotted_names: false
 };
