@@ -131,8 +131,6 @@ var renderDoclet = function(doc, force, depth){
 
 };
 
-// WARNING: does not work properly
-// Any tag after a blacklisted tag also gets ignored...
 var generateSysDocSource = function(doc){
 
   var whitelist = doc.sysdoc.whitelist;
@@ -140,11 +138,11 @@ var generateSysDocSource = function(doc){
   
   blacklist.push('sysdoc');
   
-  var shouldIgnoreLine = function(str){
+  var shouldIgnoreLine = function(str, previousIgnore){
     
     var ignore = -1, i, z, len;
     
-    if(str.indexOf('@')!==0) return ignore;
+    if (str.indexOf('@') !== 0) return previousIgnore;
     
     if(whitelist.length){
       i = 1; z = 0; len = whitelist.length;
@@ -170,11 +168,10 @@ var generateSysDocSource = function(doc){
   var cleanSource = function(src){
     var result = '/**\n';
     var parts = src.split('\n');
-    var ignore = false;
-    for(var i=0; i<parts.length;i++){
-      var shouldIgnore = shouldIgnoreLine(parts[i]);
-      ignore = (shouldIgnore===0)? false : (shouldIgnore===1)? true : ignore;
-      if(!ignore){
+    var ignore = -1;
+    for (var i = 0; i < parts.length; i++){
+      ignore = shouldIgnoreLine(parts[i], ignore);
+      if(ignore<1){
         result+= ' * '+ parts[i] +'\n';
       }
     }
