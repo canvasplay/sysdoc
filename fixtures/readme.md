@@ -6,7 +6,6 @@ look like:
   * that one
   * the other one
 
-
   1. this one
   2. that one
   3. the other one
