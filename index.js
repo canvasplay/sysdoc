@@ -252,7 +252,7 @@ var PARSE_FILES = function(){
   var parser = new Parser(SETTINGS);
   
   //find all files to be parsed
-  var files = utils.getGlobFiles(SETTINGS.files);
+  var files = utils.findGlobFiles(SETTINGS.files);
 
   //do the parsing!
   COMMENTS = parser.parseFiles(files);
@@ -375,10 +375,10 @@ var COPY_THEME_FILES = function(){
   var files = [];
   
   //get stylesheets
-  files = files.concat(utils.getGlobFiles(themePath+'/**/*.css'));
+  files = files.concat(utils.findGlobFiles(themePath+'/**/*.css'));
   
   //get scripts
-  files = files.concat(utils.getGlobFiles(themePath+'/**/*.js'));
+  files = files.concat(utils.findGlobFiles(themePath+'/**/*.js'));
   
   //copy all found files
   for(var i=0; i< files.length; i++){
