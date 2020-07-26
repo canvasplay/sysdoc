@@ -1,7 +1,8 @@
 var sysdoc = require('./index.js');
 
 sysdoc.publish({
-  files: ['fixtures/index.scss'],
+  //files: ['fixtures/index.scss'],
+  files: ['parser/**/*.*'],
   outputPath: 'docs/',
   templates: [
     'template/**/*.tpl',

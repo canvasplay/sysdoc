@@ -66,9 +66,7 @@ DocletParser.prototype.parse = function(str, isRoot){
   //process comments
   var doclets = this.processComments(comments, null);
   
-  if(isRoot){
-    doclets = this.postProcessComments(doclets);
-  }
+  if(isRoot) doclets = this.postProcessComments(doclets);
   
   //return processed comments
   return doclets;
@@ -309,7 +307,8 @@ DocletParser.prototype.filterByAccessType = function(doclets){
 
 
 /**
- * Tag Processors
+ * @section Tag Processors
+ * @parent global
  */
 
 var TagProcessors = {};
@@ -351,13 +350,51 @@ TagProcessors._ = function(parser, tag, o){
   
 };
 
+/**
+ * Bool flag used to force comment parser to ignore this doclet.
+ * @name @ignore
+ */
 TagProcessors.ignore = BoolFlagTagProcessor;
 
+/**
+ * Defines the access scope of this doclet.
+ * Posible values are `all`, `public`, `private`.
+ * @name @access
+ */
 TagProcessors.access = function(parser, tag, o){
   o.access = tag.name.trim();
   return o;
 };
+/**
+ * Example using access
+ * @access public
+ * @sysdoc {data}
+ */
 
+
+/**
+ * Bool flag used to define the doclet as async.
+ * @name @async
+ */
+TagProcessors.async = BoolFlagTagProcessor;
+
+/**
+ * Bool flag used to define the doclet as readonly.
+ * @name @readonly
+ */
+TagProcessors.readonly = BoolFlagTagProcessor;
+
+/**
+ * Bool flag used to define the doclet as private.
+ * @name @private
+ */
+TagProcessors.private = BoolFlagTagProcessor;
+
+/**
+ * Used to document a doclet itself. Used by sysdoc docs.
+ * @name @sysdoc
+ * @sysdoc
+ */
 TagProcessors.sysdoc = function(parser, tag, o){
   var options = (tag.name + ' ' + tag.description).split(',');
   var whitelist = [];
@@ -379,26 +416,71 @@ TagProcessors.sysdoc = function(parser, tag, o){
   return o;
 };
 
+/**
+ * Serves to define a package.
+ * @name @package
+ */
+/**
+ * Example using package.
+ * @package
+ * @sysdoc {data} type, description, package
+ */
 TagProcessors.package = function(parser, tag, o){
   if (parser.options.ignorePackage) return o;
   else return BoolFlagTagProcessor(parser, tag, o);
 };
 
+/**
+ * Boolflag to stop the comment parser from following child doclets.
+ * @name @nofollow
+ */
+/**
+ * Example using nofollow.
+ * @nofollow
+ * @sysdoc {data} type, description, nofollow
+ */
 TagProcessors.nofollow = BoolFlagTagProcessor;
+
+/**
+ * Flags this doclet as base for other doclets.
+ * This does not apply any additional functionality or behaviour.
+ * It's up to up to give it a use.
+ * @name @base
+ */
+/**
+ * Example using base.
+ * @base
+ * @sysdoc {data} type, description, base
+ */
 TagProcessors.base = BoolFlagTagProcessor;
 
+/**
+ * Defines the parent doclet.
+ * @name @parent
+ * @sysdoc
+ */
 TagProcessors.parent = function(parser, tag, o){
   o.parent = utils.slugify(tag.name+' '+tag.description);
   return o;
 };
 
+/**
+ * Defines the doclet type. Can be anything except a reserved tag.
+ * @name @type
+ * @sysdoc
+ */
 TagProcessors.type = function(parser, tag, o){
   if(reservedTypes.indexOf(tag.name)>=0)
     throw new Error('Invalid Type: "@type '+tag.name+'" in '+o.metadata.file+':'+o.metadata.line);
   o.type = tag.name;
   return o;
 };
-  
+
+/**
+ * Defines the doclet's name.
+ * @name @name
+ * @sysdoc
+ */
 TagProcessors.name = function(parser, tag, o){
   var name = (tag.name+' '+tag.description).trim();
   if(reservedNames.indexOf(utils.slugify(name))>=0)
@@ -406,17 +488,44 @@ TagProcessors.name = function(parser, tag, o){
   o.name = name;
   return o;
 };
-  
+
+/**
+ * Defines the doclet's description.
+ * @name @description
+ * @sysdoc
+ */
 TagProcessors.description = function(parser, tag, o){
   o.description = ('' + o.description + ' ' + tag.name + ' ' + tag.description).trim();
   return o;
 };
 
+/**
+ * Defines the css selector matching the documented chunk.
+ * @name @selector
+ */
+/**
+ * Some css module
+ * @selector .my-element
+ * @sysdoc {data}
+ */
 TagProcessors.selector = function(parser, tag, o){
   o.selector = (tag.name+tag.description).trim();
   return o;
 };
 
+/**
+ * Defines additional data groupped by keys.
+ * @name @data
+ */
+/**
+ * This is the main font used in the site
+ * @data {family} Roboto, Helvetica Neue, Arial, sans-serif
+ * @data {weight} 200, 400, 600, 800
+ * @data {style} normal
+ * @data {style} italic
+ * @data {test} tost
+ * @sysdoc {data} type, description, data
+ */
 TagProcessors.data = function(parser, tag, o){
   
   var key = tag.type;
@@ -440,6 +549,20 @@ TagProcessors.data = function(parser, tag, o){
   return o;
 };
 
+/**
+ * Defines the typed value for the documented chunk. Value is stored in multiple formats.
+ * Only one value per type si allowed. Value type can be defined or auto-resolved based on the given value.
+ * The following types are detected automatically:
+ * `sass`, `less`, `hex`, `rgba`, `rgb`, `hlsa`, `hls`, `cmyk`, `number` & `string`
+ * @name @value
+ */
+/**
+ * Example using the @value tag
+ * @value {ms} 150ms
+ * @value 150
+ * @value $duration-fast
+ * @sysdoc {data} type, description, value
+ */
 TagProcessors.value = function(parser, tag, o){
   
   //get value
@@ -460,6 +583,33 @@ TagProcessors.value = function(parser, tag, o){
   return o;
 };
 
+var resolveValueType = function(str){
+
+  //css preprocessor variables
+  if(str.indexOf('$')===0) return 'sass';
+  if(str.indexOf('@')===0) return 'less';
+  
+  //color formats
+  if(str.indexOf('#')===0) return 'hex';
+  if(str.indexOf('rgba')===0) return 'rgba';
+  if(str.indexOf('rgb')===0) return 'rgb';
+  if(str.indexOf('hlsa')===0) return 'hlsa';
+  if(str.indexOf('hls')===0) return 'hls';
+  if(str.indexOf('cmyk')===0) return 'cmyk';
+  
+  //number
+  if(!isNaN(str)) return 'number';
+  
+  //what else...
+  return 'string';
+  
+}
+
+/**
+ * Defines additional content for this doclet.
+ * @name @content
+ * @sysdoc
+ */
 TagProcessors.content = function(parser, tag, o){
   
   var content;
@@ -496,6 +646,11 @@ TagProcessors.content = function(parser, tag, o){
   
 };
 
+/**
+ * Defines an example for the decumented chunk.
+ * @name @example
+ * @sysdoc
+ */
 TagProcessors.example = function(parser, tag, o){
   
   //check for target url as name
@@ -542,17 +697,36 @@ TagProcessors.example = function(parser, tag, o){
   
 };
 
-TagProcessors.tags = function(parser, tag, o){
-  o[tag.tag] = (tag.name+' '+tag.description).split(',').map((t)=>{ return t.trim() });
+/**
+ * Defines a collection of string tags for the documented code chunk.
+ * @name @tags
+ */
+/**
+ * Example using tags
+ * @tags foo, bar
+ * @tags foo, baz
+ * @sysdoc {data} type, description, tags
+ */
+TagProcessors.tags = function (parser, tag, o) {
+  let tags = (tag.name+' '+tag.description).split(',').map((t)=>{ return t.trim() });
+  o[tag.tag] = [...o[tag.tag] || [], ...tags];
   return o;
 };
 
-TagProcessors.alias = TagProcessors.tags;
-
+/**
+ * Defines a single or collection of url sources.
+ * @name @src
+ */
+/**
+ * Example using src
+ * @src https://mysite.com/path/to/file.svg
+ * @src {svg} https://mysite.com/path/to/4632575389
+ * @sysdoc {data} type, description, src
+ */
 TagProcessors.src = function(parser, tag, o){
   var url = (tag.name+tag.description).trim();
   var value = utils.resolveUrl(url, o.metadata.file, parser.options);
-  var type = (value+'').split('.').pop() || undefined;
+  var type = tag.type || (value+'').split('.').pop() || undefined;
   var src = {
     value: value,
     type: type
@@ -560,7 +734,11 @@ TagProcessors.src = function(parser, tag, o){
   return processTagValueAsArrayFriendly(o, src, tag.tag);
 };
 
-
+/**
+ * Defines the parent doclet
+ * @name @follow
+ * @sysdoc
+ */
 TagProcessors.follow = function(parser, tag, o){
   o.follow = parseInt(tag.name);
   return o;
@@ -573,7 +751,9 @@ var reservedTypes = Object.keys(TagProcessors);
 
 
 /**
- * Doclet Processors
+ * Especial doclet types.
+ * @section Doclet Processors
+ * @parent global
  */
 
 // Thinking on abstraction...
@@ -587,16 +767,32 @@ var reservedTypes = Object.keys(TagProcessors);
 // keep looking for a parent candidate up in the tree...
 
 var DocProcessors = {};
-  
+
 DocProcessors._ = function(parser, doc){
   return doc;
 };
-  
+
+/**
+ * Used to define a section
+ * @name @section
+ */  
 DocProcessors.section = function(parser, doc){
   doc.parent = doc.parent || 'global';
   return doc;
 };
 
+/**
+ * Used to define a module
+ * @name @module
+ */  
+DocProcessors.module = DocProcessors.section;
+
+/**
+ * Include any file by url in the comment parsing process.
+ * Define the file using an string url resource.
+ * @name @include
+ * @example
+ */
 DocProcessors.include = function(parser, doc){
 
   //do not process if flagged as sysdoc
@@ -610,6 +806,10 @@ DocProcessors.include = function(parser, doc){
 
 };
 
+
+/**
+ * @name @md
+ */  
 DocProcessors.md = function(parser, doc){
 
   //get include target url based on doc's name
@@ -678,28 +878,5 @@ DocProcessors.md = function(parser, doc){
   
 };
 
-
-var resolveValueType = function(str){
-
-  //css preprocessor variables
-  if(str.indexOf('$')===0) return 'sass';
-  if(str.indexOf('@')===0) return 'less';
-  
-  //color formats
-  if(str.indexOf('#')===0) return 'hex';
-  if(str.indexOf('rgba')===0) return 'rgba';
-  if(str.indexOf('rgb')===0) return 'rgb';
-  if(str.indexOf('hlsa')===0) return 'hlsa';
-  if(str.indexOf('hls')===0) return 'hls';
-  if(str.indexOf('cmyk')===0) return 'cmyk';
-  
-  //number
-  if(!isNaN(str)) return 'number';
-  
-  //what else...
-  
-  return 'string';
-  
-}
 
 module.exports = DocletParser;
