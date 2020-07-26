@@ -1,0 +1,1 @@
+<small class="text-muted">Source: <a target="_blank" href="sources/<%= utils.urlify(doc.metadata.file) %>.html#L<%= doc.metadata.line %>" style="color: inherit;"><%= doc.metadata.file %>:<%= doc.metadata.line %></a></small>

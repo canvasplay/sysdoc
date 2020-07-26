@@ -1,7 +1,11 @@
 <div class="styl-doc" id="<%= utils.getDocPathName(doc) %>">
   
+  <%= render('doc__pathname',{doc:doc}) %>
+  <%= render('doc__sourcelink',{doc:doc}) %>
   
-  <h3><code><%= doc.name %>(
+  <h3><code>
+  <% if(doc.async){ %> <small>async</small> <% } %>
+  <%= doc.name %>(
   <% var params = (doc.param.push)? doc.param : [doc.param] %>
   <% var hasOptional = false; %>
   <% _.each(params, function(param, index, collection){ %>
