@@ -1,12 +1,10 @@
 
-/*
-tob be used by CLI...
+/* TODO:CLI arguments integration
 process.argv.forEach(function (val, index, array) {
   console.log(index + ': ' + val);
-});
-*/
-var _ = require('lodash');
+}); */
 
+var _ = require('lodash');
 var Parser = require('./parser/parser');
 var utils = require('./parser/utils');
 
@@ -136,7 +134,7 @@ var generateSysDocSource = function(doc){
   var whitelist = doc.sysdoc.whitelist;
   var blacklist = doc.sysdoc.blacklist;
   
-  blacklist.push('sysdoc');
+  if (!whitelist.includes('sysdoc')) blacklist.push('sysdoc');
   
   var shouldIgnoreLine = function(str, previousIgnore){
     
@@ -193,7 +191,7 @@ var generateSysDocObject = function(doc){
   var whitelist = doc.sysdoc.whitelist;
   var blacklist = doc.sysdoc.blacklist;
   
-  blacklist.push('sysdoc');
+  if (!whitelist.includes('sysdoc')) blacklist.push('sysdoc');
   
   var obj = JSON.parse(JSON.stringify(doc));
   
