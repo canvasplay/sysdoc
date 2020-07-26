@@ -311,7 +311,7 @@ var COMMENTS_TREE = [];
 var BUILD_COMMENTS_TREE = function(){
 
   COMMENTS_TREE = buildDocTree(COMMENTS,'');
-  utils.writeFile(SETTINGS.outputPath + 'data2.json', JSON.stringify(COMMENTS_TREE));
+  utils.writeFile(SETTINGS.outputPath + 'data.json', JSON.stringify(COMMENTS_TREE, null, 2));
   
   RUN();
 };
