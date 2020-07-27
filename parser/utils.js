@@ -3,8 +3,7 @@ var fse = require("fs-extra");
 var glob = require("glob");
 
 /**
- * @name utils
- * @type module
+ * @moduel utils
  */
 var utils = {};
 
