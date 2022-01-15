@@ -27,7 +27,7 @@
     "js-beautify": "^1.7.5",
     "lodash": "^4.17.19",
     "markdown-toc": "^1.2.0",
-    "marked": "^0.4.0"
+    "marked": "^4.0.10"
   },
   "devDependencies": {
     "autoprefixer": "^9.0.0",
